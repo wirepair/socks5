@@ -85,6 +85,11 @@ func (srv *Server) ListenAndServe(addr string) error {
 	}
 }
 
+func (srv *Server) ServeConn(c net.Conn) {
+	conn, _ := srv.newConn(c)
+	go conn.serve()
+}
+
 func (srv *Server) newConn(c net.Conn) (*Conn, error) {
 	conn := &Conn{
 		server: srv,
